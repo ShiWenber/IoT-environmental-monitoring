@@ -13,14 +13,13 @@
     <groupId>edu.ynu</groupId>
     <artifactId>arduino</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>elmServer</name>
+    <name>arduino</name>
     <description>arduino</description>
 
     <!--    添加阿里源-->
     <repositories>
         <repository>
             <id>public</id>
-            <name>aliyun nexus</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
