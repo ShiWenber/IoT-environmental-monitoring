@@ -1,0 +1,65 @@
+@import 'common.css';
+
+.login-container{
+    width: 100%;
+    height: calc(100% - 50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-dialog{
+    width: 400px;
+    height: 330px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 10px;
+}
+
+.login-dialog p{
+    text-align: center;
+    padding: 50px 0;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.row{
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row span{
+    display: block;
+    width: 100px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.row input{
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 22px;
+    text-indent: 0.5rem;
+    outline: none;
+    border-radius: 10px;
+    border: none;
+}
+
+.row .btn{
+    width: 300px;
+    line-height: 40px;
+    border-radius: 10px;
+    background-color: green;
+    color: #fff;
+    border: none;
+    margin-top: 50px;
+}
+
+.row .btn:active{
+    background-color: darkorange;
+}
