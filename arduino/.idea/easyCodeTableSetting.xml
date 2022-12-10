@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EasyCodeTableSetting">
+    <option name="tableInfoMap">
+      <map>
+        <entry key="edu.ynu.arduino.entity.EnvironmentData">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="lightIntensity" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="temperature" />
+                    <option name="type" value="java.math.BigDecimal" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="airHumidity" />
+                    <option name="type" value="java.math.BigDecimal" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="soilMoisture" />
+                    <option name="type" value="java.math.BigDecimal" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="time" />
+                    <option name="type" value="java.time.Instant" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="统一物理主键 uuid 版本，需要提供给子类访问所以用protected" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="id" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建日期" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="createdDate" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="最后更新日期 Timestamp" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="lastModifiedDate" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="EnvironmentData" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="arduino" />
+              <option name="savePackageName" value="edu.ynu.arduino" />
+              <option name="savePath" value="./src/main/java/edu/ynu/arduino" />
+              <option name="templateGroupName" value="myjpa" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="edu.ynu.arduino.entity.Role">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="name" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="统一物理主键 uuid 版本，需要提供给子类访问所以用protected" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="id" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建日期" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="createdDate" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="最后更新日期 Timestamp" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="lastModifiedDate" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="Role" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="arduino" />
+              <option name="savePackageName" value="edu.ynu.arduino" />
+              <option name="savePath" value="./src/main/java/edu/ynu/arduino" />
+              <option name="templateGroupName" value="myjpa" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="edu.ynu.arduino.entity.User">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="password" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="username" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="sex" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="delTag" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="accountNonExpired" />
+                    <option name="type" value="boolean" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="accountNonLocked" />
+                    <option name="type" value="boolean" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="credentialsNonExpired" />
+                    <option name="type" value="boolean" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="enabled" />
+                    <option name="type" value="boolean" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="roles" />
+                    <option name="type" value="java.util.List&lt;javax.management.relation.Role&gt;" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="统一物理主键 uuid 版本，需要提供给子类访问所以用protected" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="id" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建日期" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="createdDate" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="最后更新日期 Timestamp" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="lastModifiedDate" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="User" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="arduino" />
+              <option name="savePackageName" value="" />
+              <option name="savePath" value="./src/main/java/edu/ynu/arduino" />
+              <option name="templateGroupName" value="" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="edu.ynu.arduino.entity.User_Role">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="user$id" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="role$id" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="统一物理主键 uuid 版本，需要提供给子类访问所以用protected" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="id" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建日期" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="createdDate" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="最后更新日期 Timestamp" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="null" />
+                    <option name="name" value="lastModifiedDate" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="User_Role" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="arduino" />
+              <option name="savePackageName" value="" />
+              <option name="savePath" value="./src/main/java/edu/ynu/arduino" />
+              <option name="templateGroupName" value="" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
