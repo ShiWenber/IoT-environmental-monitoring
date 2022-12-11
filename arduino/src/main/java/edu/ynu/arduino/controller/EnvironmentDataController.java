@@ -1,25 +1,19 @@
 package edu.ynu.arduino.controller;
-    
-    
 
 
-
-import edu.ynu.arduino.controller.AbstractTypedController;
-import java.lang.String;
 import edu.ynu.arduino.entity.EnvironmentData;
 import edu.ynu.arduino.service.EnvironmentDataService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
+import java.math.BigDecimal;
+
 /**
  * 控制层
  *
@@ -30,14 +24,28 @@ import javax.annotation.Resource;
 @RestController
 @Tag(name = "EnvironmentDataController")
 @RequestMapping("/environmentData")
-public class EnvironmentDataController extends AbstractTypedController<EnvironmentData, String>{
-    
+public class EnvironmentDataController extends AbstractTypedController<EnvironmentData, String> {
+
     @Resource
-	private EnvironmentDataService environmentDataService;
-    
+    private EnvironmentDataService environmentDataService;
+
     EnvironmentDataController(EnvironmentDataService service) {
         this.svcContext = service;
         this.environmentDataService = service;
+    }
+
+    @Operation(summary = "新建数据记录")
+    @PostMapping("/create")
+    public EnvironmentData create(@PathParam("airHumidity") Double airHumidity,
+                                  @PathParam("light_intensity") Integer lightIntensity,
+                                  @PathParam("soil_moisture") Double soilMoisture,
+                                  @PathParam("temperature") Double temperature) {
+        EnvironmentData environmentData = new EnvironmentData();
+        environmentData.setAirHumidity(BigDecimal.valueOf(airHumidity));
+        environmentData.setLightIntensity(lightIntensity);
+        environmentData.setSoilMoisture(BigDecimal.valueOf(soilMoisture));
+        environmentData.setTemperature(BigDecimal.valueOf(temperature));
+        return environmentDataService.create(environmentData);
     }
 }
 
