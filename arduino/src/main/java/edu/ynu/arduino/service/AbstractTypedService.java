@@ -2,11 +2,14 @@ package edu.ynu.arduino.service;
 
 import edu.ynu.arduino.dao.AbstractDao;
 import edu.ynu.arduino.dao.specification.AbstractQueryCondition;
+import edu.ynu.arduino.dao.specification.SpecificationBuilder;
 import edu.ynu.arduino.entity.AbstractDomainEntity;
+import edu.ynu.arduino.entity.EnvironmentData;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
 
@@ -14,6 +17,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.locks.Condition;
 
 /**
  *
@@ -30,19 +34,19 @@ public class AbstractTypedService<T extends AbstractDomainEntity, IdType>
 
     //#region 实体类型化访问
 
-    
+
     @Operation(summary = "根据id获取数据对象")
     public T getById(IdType id) {
         return dataContext.getOne(id);
     }
 
-    
+
     @Operation(summary = "根据id获取数据对象, 如果没有找到则引发一个异常")
     public T getByIdNotNull(IdType id) {
         return dataContext.findById(id).orElseThrow(() -> new IllegalArgumentException("无法找到请求的数据"));
     }
 
-    
+
     @Operation(summary = "删除数据对象")
     public List<T> findByIds(Collection<IdType> ids) {
         if (CollectionUtils.isEmpty(ids)) {
@@ -56,7 +60,7 @@ public class AbstractTypedService<T extends AbstractDomainEntity, IdType>
      *
      * @return
      */
-    
+
     @Operation(summary = "创建数据对象")
     public List<T> findAll() {
         return dataContext.findAll();
@@ -96,50 +100,52 @@ public class AbstractTypedService<T extends AbstractDomainEntity, IdType>
      * @param condition 查询条件
      * @return
      */
-    
+
     @Operation(summary = "分页查询数据对象")
     public Page<T> pageQuery(Pageable pageable, @Valid AbstractQueryCondition condition) {
-        // ToDo:这个部分需要思考如何进行.
+
+        //  TODO
         var sb = condition.builderCondition();
+
         // builderCondition(condition);
 
         return dataContext.queryPage(pageable, sb);
     }
 
-    
+
     @Operation(summary = "创建数据对象")
     public T create(T item) {
         return dataContext.save(item);
     }
 
-    
+
     @Operation(summary = "批量创建数据对象")
     public List<T> batchCreate(List<T> items) {
 
         return dataContext.saveAll(items);
     }
 
-    
+
     @Operation(summary = "更新数据对象")
     public T update(T item) {
         return dataContext.save(item);
     }
 
-    
+
     @Operation(summary = "更新数据对象")
     public List<T> batchUpdate(List<T> items) {
 
         return dataContext.saveAll(items);
     }
 
-    
+
     @Operation(summary = "删除数据对象")
     public void delete(IdType id) {
         T item = getByIdNotNull(id);
         dataContext.delete(item);
     }
 
-    
+
     @Operation(summary = "删除数据对象")
     public int deleteAll(Collection<IdType> ids) {
         if (CollectionUtils.isEmpty(ids)) {

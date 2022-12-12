@@ -1,23 +1,17 @@
 package edu.ynu.arduino.service;
-    
-    
 
 
-import edu.ynu.arduino.service.AbstractTypedService;
-import java.lang.String;
-import edu.ynu.arduino.entity.EnvironmentData;
-import edu.ynu.arduino.service.EnvironmentDataService;
 import edu.ynu.arduino.dao.EnvironmentDataDao;
-import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
+import edu.ynu.arduino.entity.EnvironmentData;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+
 /**
  * 业务层
  *
@@ -28,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class EnvironmentDataService extends AbstractTypedService<EnvironmentData, String> {
 
-	@Resource
+    @Resource
     private EnvironmentDataDao environmentDataDao;
 
     public EnvironmentDataService(EnvironmentDataDao dao) {
@@ -36,9 +30,21 @@ public class EnvironmentDataService extends AbstractTypedService<EnvironmentData
         this.environmentDataDao = dao;
     }
 
-    public Page<EnvironmentData> queryEnvironmentDataByPage(Pageable page) {
-        return environmentDataDao.queryPage(page, null);
+    public Page<EnvironmentData> queryEnvironmentDataPage(Pageable page) {
+        Specification<EnvironmentData> spec = (root, query, criteriaBuilder) ->
+                query.orderBy(
+                        criteriaBuilder.desc(root.get("id"))
+                ).getRestriction();
+        return environmentDataDao.queryPage(page, spec);
     }
 
+    @Operation(summary = "按照时间排序分页查询")
+    public Page<EnvironmentData> queryEnvironmentDataPageByTime(Pageable page) {
+        Specification<EnvironmentData> spec = (root, query, criteriaBuilder) ->
+                query.orderBy(
+                        criteriaBuilder.desc(root.get("time"))
+                ).getRestriction();
+        return environmentDataDao.queryPage(page, spec);
+    }
 }
 

@@ -45,11 +45,6 @@ public class User extends AbstractDomainEntity implements UserDetails {
     @Schema(description = "用户性别")
     private Integer sex;
 
-    @NotNull
-    @Column(name = "delTag", nullable = false)
-    @Schema(description = "删除标志")
-    private Integer delTag;
-
     @Schema(description = "用户是否没有过期")
     private boolean accountNonExpired;
 
