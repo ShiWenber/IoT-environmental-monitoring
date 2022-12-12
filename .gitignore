@@ -118,3 +118,4 @@ fabric.properties
 target/
 logs/
 node_modules/
+.idea/
