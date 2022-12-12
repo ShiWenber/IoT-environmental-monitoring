@@ -40,5 +40,31 @@ public class UserService extends AbstractTypedService<User, String> {
         return userDao.queryPage(page, null);
     }
 
+    public User login(String username, String password) {
+        User user = userDao.findByUsernameAndPassword(username, password);
+        if (user == null) {
+            log.info("密码错误");
+            return null;
+        }
+
+        return user;
+    }
+    public User register(String username, String password) {
+        User user = userDao.findByUsername(username);
+        if (user != null) {
+            log.info("用户已存在");
+            return null;
+        }
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        newUser.setSex(1);
+        newUser.setEnabled(true);
+        newUser.setAccountNonExpired(true);
+        newUser.setAccountNonLocked(true);
+        newUser.setCredentialsNonExpired(true);
+        return userDao.save(newUser);
+    }
+
 }
 
