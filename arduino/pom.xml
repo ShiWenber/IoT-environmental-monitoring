@@ -39,6 +39,14 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
+
+        <pluginRepository>
+            <id>alimaven spring plugin</id>
+            <name>alimaven spring plugin</name>
+            <url>https://maven.aliyun.com/repository/spring-plugin</url>
+        </pluginRepository>
+
+
     </pluginRepositories>
     <!--    /添加阿里源-->
 
@@ -59,11 +67,11 @@
             <!--            </exclusions>-->
         </dependency>
 
-<!--        &lt;!&ndash; spring security&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash; spring security&ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
