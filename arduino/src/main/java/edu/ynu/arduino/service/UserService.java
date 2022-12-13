@@ -18,6 +18,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+
+import static com.alibaba.druid.util.Utils.md5;
+
 /**
  * 业务层
  *
@@ -57,6 +60,8 @@ public class UserService extends AbstractTypedService<User, String> {
         }
         User newUser = new User();
         newUser.setUsername(username);
+//        用md5加密
+//        log.info("加密后的密码为：{}", password);
         newUser.setPassword(password);
         newUser.setSex(1);
         newUser.setEnabled(true);
