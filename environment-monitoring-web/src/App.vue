@@ -42,10 +42,10 @@ router.beforeEach((to) => {
                   <DataLine />
                 </el-icon>首页</el-menu-item>
               <el-menu-item index="/login"><el-icon>
-                  <DataLine />
+                  <User />
                 </el-icon>登录</el-menu-item>
               <el-menu-item index="/data"><el-icon>
-                  <User />
+                  <List />
                 </el-icon>数据管理</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
