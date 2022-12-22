@@ -38,7 +38,7 @@ export default defineConfig({
       }
     }
   },
-  base: './',
+  base: 'http://boer.ink:5004',
   css: {
     preprocessorOptions: {
       // 覆盖掉element-plus包中的主题变量文件

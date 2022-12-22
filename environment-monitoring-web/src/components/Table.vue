@@ -18,7 +18,7 @@
   />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, reactive } from 'vue'
 import axios from 'axios'
 
@@ -30,7 +30,7 @@ const state = reactive({
   tableData: [], // 数据列表
   total: 0, // 总条数
   currentPage: 1, // 当前页
-  pageSize: 10, // 分页大小
+  pageSize: 16, // 分页大小
   multipleSelection: [], // 多选框
   })
   // 初始化钩子函数
@@ -41,7 +41,7 @@ const state = reactive({
   // 获取列表方法
   const getList = () => {
   state.loading = true
-  axios.get("/api/" + props.action, {
+  axios.get("/api" + props.action, {
     params: {
       page: state.currentPage,
       size: state.pageSize,

@@ -2,10 +2,8 @@
 // import axios from '@/utils/axios'
 import axios from 'axios'
 // 安装 js-md5，密码需要 md5 加密，服务端是解密 md5 的形式
-import md5 from 'js-md5'
 import { reactive, ref, toRefs } from 'vue'
 import { localSet } from '@/utils'
-import { createRequire } from 'module';
 
 // el-form 组件接收一个 ref 属性，Vue3 需要这样声明
 const loginForm = ref(null)
@@ -45,7 +43,7 @@ const submitForm = async () => {
 
 
             // 硬编码的
-            var config = {
+            let config = {
                 method: 'post',
                 url: '/api/user/login?username=' + state.ruleForm.username + '&password=' + state.ruleForm.password,
                 headers: {}
@@ -78,10 +76,10 @@ const submitForm = async () => {
     })
 }
 // 重制方法
-const resetForm = () => {
-    // loginForm能拿到 el-form 的重制方法
-    loginForm.value.resetFields();
-}
+// const resetForm = () => {
+//     // loginForm能拿到 el-form 的重制方法
+//     loginForm.value.resetFields();
+// }
 </script>
 
 <template>
@@ -90,7 +88,6 @@ const resetForm = () => {
         <div class="login-container">
             <!--登录框头部logo部分-->
             <div class="head">
-                <!-- <img class="logo" src="https://s.weituibao.com/1582958061265/mlogo.png" /> -->
                 <div class="name">
                     <div class="title">植物生长环境监测系统</div>
                     <div class="tips">SpringBoot + Vue3.0</div>

@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import axios from 'axios';
+import { reactive } from 'vue'
+import { dataType } from 'element-plus/es/components/table-v2/src/common';
 import TheWelcome from '../components/TheWelcome.vue'
+import { tsMappedType } from '@babel/types';
 // const ENV = import.meta.env
 // export default {
 //   name: 'HomeView',
@@ -9,121 +13,201 @@ import TheWelcome from '../components/TheWelcome.vue'
 // }
 // 将上述代码转化为setup模式
 const ENV = import.meta.env
-console.log(ENV)
+console.log("ENV" + ENV.BASE_URL)
+console.log("ENV" + ENV.VITE_BASE_URL)
+console.log("ENV" + ENV.TEST)
 import { onMounted, onUnmounted } from 'vue'
 
+const state = reactive({
+  total: 0,
+  today: 0,
+  runningTime: 0
+})
+/**
+ * 时间戳转换为时间函数
+ */
+function timestampToTimeInterval(timestamp) {
+  timestamp = timestamp ? timestamp : null;
+  let D = Math.floor(timestamp / 1000 / 60 / 60 / 24);
+  let h = Math.floor(timestamp / 1000 / 60 / 60 % 24);
+  let m = Math.floor(timestamp / 1000 / 60 % 60);
+  let s = Math.floor(timestamp / 1000 % 60);
+  return D + "天" + h + "时" + m + "分" + s + "秒";
+}
+
+
+
 let myChart = null
+
+function initChart(res, myChart) {
+  var today = new Date();
+  var todaynum = Date.parse(new Date(today.toLocaleDateString()).toString());
+  var min = null
+  var max = null
+
+  let lightIntensities = [];
+  let temperatures = [];
+  let airHumidities = [];
+  let soilMoistures = [];
+  for (let i = 0; i < res.data.length; i++) {
+    let now = new Date(res.data[i].time);
+    // 取补使得数值和物理意义正相关,并映射到0-200
+    lightIntensities.push([+now, (1024 - res.data[i].lightIntensity)/5]);
+    temperatures.push([+now, res.data[i].temperature]);
+    airHumidities.push([+now, res.data[i].airHumidity]);
+    soilMoistures.push([+now,(1024 - res.data[i].soilMoisture)/5]);
+
+    if (Date.parse(new Date(res.data[i].time).toString()) - todaynum >= 0) {
+      state.today += 1;
+    }
+    // 找到第一个不为空的时间赋值给min和max
+    if (min == null && res.data[i].time != null) {
+      min = res.data[i].time
+    }
+    if (max == null && res.data[i].time != null) {
+      max = res.data[i].time
+    }
+    // 找最大最小值
+    for (let j = 0; j < res.data.length; j++) {
+      if ((Date.parse(new Date(res.data[i].time).toString()) < Date.parse(new Date(min).toString())) && res.data[i].time != null) {
+        min = res.data[i].time
+      }
+      if (Date.parse(new Date(res.data[i].time).toString()) > Date.parse(new Date(max).toString())) {
+        max = res.data[i].time
+      }
+    }
+
+
+  }
+  // 求出最大最小时间戳的差转化为
+  state.runningTime = timestampToTimeInterval((Date.parse(new Date(max).toString()) - Date.parse(new Date(min).toString())))
+  // 指定图表的配置项和数据
+  state.total = res.data.length
+  const option = {
+    title: {
+      text: '数据折线图'
+    },
+    tooltip: {
+      trigger: 'axis',
+      position: function (pt) {
+        return [pt[0], '10%'];
+      }
+    },
+    legend: {
+      data: ['光照强度', '温度', '湿度', '土壤湿度']
+    },
+    toolbox: {
+      feature: {
+        dataZoom: {
+          yAxisIndex: 'none'
+        },
+        restore: {},
+        saveAsImage: {}
+      }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis:
+    {
+      type: 'time',
+      boundaryGap: false,
+    },
+    yAxis:
+    {
+      type: 'value',
+      boundaryGap: [0, '100%']
+    },
+    dataZoom: [
+      {
+        type: 'inside',
+        start: 0,
+        end: 100
+      },
+      {
+        start: 0,
+        end: 20,
+      }
+    ],
+    series: [
+      {
+        name: '光照强度',
+        type: 'line',
+        // smooth: true,
+        areaStyle: {},
+        emphasis: {
+          focus: 'series'
+        },
+        data: lightIntensities
+      },
+      {
+        name: '温度',
+        type: 'line',
+        areaStyle: {},
+        emphasis: {
+          focus: 'series'
+        },
+        data: temperatures
+      },
+      {
+        name: '湿度',
+        type: 'line',
+        areaStyle: {},
+        emphasis: {
+          focus: 'series'
+        },
+        data: airHumidities
+      },
+      {
+        name: '土壤湿度',
+        type: 'line',
+        areaStyle: {},
+        emphasis: {
+          focus: 'series'
+        },
+        data: soilMoistures
+      }
+    ]
+  }
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option)
+}
+
+// setInterval(() => {
+//   state.today = 0;
+//   state.runningTime = 0;
+//   state.total = 0;
+
+
+
+//   if (window.echarts) {
+//     // 基于准备好的dom，初始化echarts实例
+//     myChart = window.echarts.init(document.getElementById('zoom'))
+
+//     axios.get('/api/environmentData/all').then(res => {
+//       initChart(res, myChart);
+//     })
+//   }
+
+// }, 10000)
 
 onMounted(() => {
   if (window.echarts) {
     // 基于准备好的dom，初始化echarts实例
     myChart = window.echarts.init(document.getElementById('zoom'))
 
-    // 指定图表的配置项和数据
-    const option = {
-      title: {
-        text: '系统折线图'
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
-      },
-      legend: {
-        data: ['新增注册', '付费用户', '活跃用户', '订单数', '当日总收入']
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {}
-        }
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: [
-        {
-          type: 'category',
-          boundaryGap: false,
-          data: ['2021-03-11', '2021-03-12', '2021-03-13', '2021-03-14', '2021-03-15', '2021-03-16', '2021-03-17']
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
-      series: [
-        {
-          name: '新增注册',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          emphasis: {
-            focus: 'series'
-          },
-          data: [120, 132, 101, 134, 90, 230, 210]
-        },
-        {
-          name: '付费用户',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          emphasis: {
-            focus: 'series'
-          },
-          data: [220, 182, 191, 234, 290, 330, 310]
-        },
-        {
-          name: '活跃用户',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          emphasis: {
-            focus: 'series'
-          },
-          data: [150, 232, 201, 154, 190, 330, 410]
-        },
-        {
-          name: '订单数',
-          type: 'line',
-          stack: '总量',
-          areaStyle: {},
-          emphasis: {
-            focus: 'series'
-          },
-          data: [320, 332, 301, 334, 390, 330, 320]
-        },
-        {
-          name: '当日总收入',
-          type: 'line',
-          stack: '总量',
-          label: {
-            show: true,
-            position: 'top'
-          },
-          areaStyle: {},
-          emphasis: {
-            focus: 'series'
-          },
-          data: [820, 932, 901, 934, 1290, 1330, 1320]
-        }
-      ]
-    }
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option)
-  } 
+    axios.get('/api/environmentData/queryAllOrderByTime').then(res => {
+      initChart(res, myChart);
+    })
+  }
 })
 onUnmounted(() => {
   myChart.dispose()
 })
+
 </script>
 
 <template>
@@ -132,26 +216,26 @@ onUnmounted(() => {
       <el-card class="order-item">
         <template #header>
           <div class="card-header">
-            <span>今日订单数</span>
+            <span>历史记录总数</span>
           </div>
         </template>
-        <div class="item">1888</div>
+        <div class="item">{{ state.total }}</div>
       </el-card>
       <el-card class="order-item">
         <template #header>
           <div class="card-header">
-            <span>今日日活</span>
+            <span>今日数据</span>
           </div>
         </template>
-        <div class="item">36271</div>
+        <div class="item">{{ state.today }}</div>
       </el-card>
       <el-card class="order-item">
         <template #header>
           <div class="card-header">
-            <span>转化率</span>
+            <span>运行时间</span>
           </div>
         </template>
-        <div class="item">20%</div>
+        <div class="item">{{ state.runningTime }}</div>
       </el-card>
     </div>
     <div id="zoom"></div>
@@ -172,5 +256,9 @@ onUnmounted(() => {
 
 .introduce .order .order-item:last-child {
   margin-right: 0;
+}
+
+#zoom {
+  min-height: 500px;
 }
 </style>

@@ -12,6 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * 业务层
@@ -39,6 +41,7 @@ public class EnvironmentDataService extends AbstractTypedService<EnvironmentData
         return environmentDataDao.queryPage(page, spec);
     }
 
+
     @Operation(summary = "按照时间排序分页查询")
     public Page<EnvironmentData> queryEnvironmentDataPageByTime(Pageable page) {
 //		前端不从1开始
@@ -49,5 +52,15 @@ public class EnvironmentDataService extends AbstractTypedService<EnvironmentData
                 ).getRestriction();
         return environmentDataDao.queryPage(page1, spec);
     }
+
+	public List<EnvironmentData> queryAllOrderByTime() {
+		List<EnvironmentData> ls = environmentDataDao.findAll();
+		log.info("ls:{}",ls);
+		// 根据时间倒序排序
+		Comparator<EnvironmentData> timeComparator = (o1, o2) -> o2.getTime().compareTo(o1.getTime());
+		ls.sort(timeComparator.reversed());
+
+		return ls;
+	}
 }
 
